@@ -6,10 +6,10 @@ import {
   jsonSchemaTransform,
 } from "fastify-type-provider-zod";
 import { fastifySwagger } from "@fastify/swagger";
-import { fastifySwaggerUi } from "@fastify/swagger-ui";
 import { createCourseRoute } from "./src/routes/create-course.ts";
 import { getCoursesRoute } from "./src/routes/get-courses.ts";
 import { getCourseByIdRoute } from "./src/routes/get-course-by-id.ts";
+import scalarAPIReference from "@scalar/fastify-api-reference";
 
 const server = fastify({
   logger: {
@@ -35,7 +35,7 @@ server.register(fastifySwagger, {
   transform: jsonSchemaTransform,
 });
 
-server.register(fastifySwaggerUi, {
+server.register(scalarAPIReference, {
   routePrefix: "/docs",
 });
 
