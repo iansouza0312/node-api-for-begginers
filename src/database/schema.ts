@@ -21,5 +21,5 @@ export const enrollments = pgTable("enrollments", {
   courseId: uuid()
     .notNull()
     .references(() => courses.id),
-  createdAt: timestamp().notNull().defaultNow(),
+  createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
 });
