@@ -12,6 +12,13 @@ Esse projeto visa demonstrar um exemplo prático, desde a criação e configura�
 - Postgres (docker image)
 - Git (controle de versionamento)
 
+## IMPORTANTE - Para criar e manter uma boa documentação, foram utilizadas as libs :
+
+- fastify-type-provider-zod
+- zod
+
+Com essa combinação, além de desenvolver validações consistentes e completas, é possível automatizar o desenvolvimento de documentações robustas e muito bem-escritas, facilitando o trabalho de integração com o dev frontend.
+
 ## Boas práticas que devem ser utilizadas, sempre que possível :
 
 1. Armazenar credenciais de segurança e acesso em variáveis de ambiente (`.env` file).
