@@ -8,7 +8,8 @@ Content-Type: application/json
 ###
 GET http://localhost:3333/courses?orderBy=title
 ###
-GET http://localhost:3333/courses/591921c3-4614-4dea-b78c-ee1936049d5d
+GET http://localhost:3333/courses/97814cdf-1972-495b-af18-4c1c34f92fce
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNmFiNTIzOS0yMGI4LTRiMjEtYTJiNS03MDQzMTFmOWI0YTMiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc2NTA0MjY2OH0.5tP9360lv36_7Gvi0QtsM5MZNBvvfwtZ-NeNnQ7gBR0
 ###
 POST http://localhost:3333/sessions
 Content-Type: application/json
