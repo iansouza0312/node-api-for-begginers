@@ -3,8 +3,11 @@ import {
   validatorCompiler,
   serializerCompiler,
   type ZodTypeProvider,
+  jsonSchemaTransform,
 } from "fastify-type-provider-zod";
 import { z } from "zod";
+import { fastifySwagger } from "@fastify/swagger";
+import { fastifySwaggerUi } from "@fastify/swagger-ui";
 import { db } from "./src/database/client.ts";
 import { courses } from "./src/database/schema.ts";
 import { eq } from "drizzle-orm";
@@ -20,6 +23,22 @@ const server = fastify({
     },
   },
 }).withTypeProvider<ZodTypeProvider>();
+
+server.register(fastifySwagger, {
+  openapi: {
+    info: {
+      title: "Documentação para consumo de API de Cursos",
+      description:
+        "Esta é a documentação da API de Cursos desenvolvida no curso 'Primeira API com Node.js'.",
+      version: "1.0.0",
+    },
+  },
+  transform: jsonSchemaTransform,
+});
+
+server.register(fastifySwaggerUi, {
+  routePrefix: "/docs",
+});
 
 server.setSerializerCompiler(serializerCompiler);
 server.setValidatorCompiler(validatorCompiler);

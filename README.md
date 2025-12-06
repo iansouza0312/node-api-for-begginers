@@ -7,6 +7,7 @@ Esse projeto visa demonstrar um exemplo prático, desde a criação e configura�
 - NodeJS (Version 23.8.0)
 - Typescript
 - Fastify
+- Swagger
 - Docker
 - Drizzle
 - Postgres (docker image)
@@ -16,6 +17,7 @@ Esse projeto visa demonstrar um exemplo prático, desde a criação e configura�
 
 - fastify-type-provider-zod
 - zod
+- @fastify/swagger
 
 Com essa combinação, além de desenvolver validações consistentes e completas, é possível automatizar o desenvolvimento de documentações robustas e muito bem-escritas, facilitando o trabalho de integração com o dev frontend.
 
