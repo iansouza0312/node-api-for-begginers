@@ -1,5 +1,8 @@
 import fastify from "fastify";
-import crypto from "node:crypto";
+import {
+  validatorCompiler,
+  serializerCompiler,
+} from "fastify-type-provider-zod";
 import { db } from "./src/database/client.ts";
 import { courses } from "./src/database/schema.ts";
 import { eq } from "drizzle-orm";
@@ -16,11 +19,8 @@ const server = fastify({
   },
 });
 
-// const courses = [
-//   { id: "1", title: "Learn ReactJS" },
-//   { id: "2", title: "Learn VueJS" },
-//   { id: "3", title: "Learn Angular" },
-// ];
+server.setSerializerCompiler(serializerCompiler);
+server.setValidatorCompiler(validatorCompiler);
 
 server.get("/courses", async (request, reply) => {
   const result = await db
