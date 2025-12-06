@@ -34,6 +34,8 @@ Com essa combinação, além de desenvolver validações consistentes e completa
 
 - Object-Relational Mapping | ORM : técnica que traduz o código orientado a objetos de uma aplicação para o modelo relacional de um banco de dados, atuando como uma camada que gera certo nível de abstração na escrita de consultas SQL dentro do seu código, permitindo que traalhe diretamente com objetos dentro da linguagem de programação do projeto, sem utilizar SQL puro.
 
+- HASH : algoritmo utilizado nos campos de senha do usuário, depoois de criado, não há como descriptografar o hash.
+
 ## Testes da aplicação - como foram desenvolvidos ?
 
 - e2e (end-to-end)

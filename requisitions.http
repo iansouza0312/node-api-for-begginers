@@ -9,3 +9,11 @@ Content-Type: application/json
 GET http://localhost:3333/courses?orderBy=title
 ###
 GET http://localhost:3333/courses/591921c3-4614-4dea-b78c-ee1936049d5d
+###
+POST http://localhost:3333/sessions
+Content-Type: application/json
+
+{
+  "email": "Paulo.Macedo@yahoo.com",
+  "password": "123456"
+}
