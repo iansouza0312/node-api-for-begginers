@@ -8,9 +8,17 @@ export const createCourseRoute: FastifyPluginAsyncZod = async (server) => {
     "/courses",
     {
       schema: {
+        tags: ["Courses"],
+        summary: "Create a new course",
+        description: "Endpoint to create a new course with a title.",
         body: z.object({
           title: z.string().min(5, "Title must be at least 5 characters long"),
         }),
+        response: {
+          201: z
+            .object({ courseId: z.uuid() })
+            .describe("Returns the ID of the newly created course"),
+        },
       },
     },
     async (request, reply) => {
