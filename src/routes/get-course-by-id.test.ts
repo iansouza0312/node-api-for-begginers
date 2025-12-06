@@ -22,3 +22,13 @@ test("getting a course by id", async () => {
     },
   });
 });
+
+test("return 404 when course not found", async () => {
+  await server.ready();
+
+  const response = await request(server.server).get(
+    `/courses/ba897db5-32be-4c00-b16a-c83bf27d975d`
+  );
+
+  expect(response.status).toBe(404);
+});
