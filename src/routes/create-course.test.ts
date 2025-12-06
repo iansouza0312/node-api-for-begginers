@@ -1,0 +1,20 @@
+import { test, expect } from "vitest";
+import request from "supertest";
+import { server } from "../app.ts";
+import { faker } from "@faker-js/faker";
+
+test("create a course with success", async () => {
+  await server.ready();
+
+  const response = await request(server.server)
+    .post("/courses")
+    .set("Content-Type", "application/json")
+    .send({
+      title: faker.lorem.words(5),
+    });
+
+  expect(response.status).toBe(201);
+  expect(response.body).toEqual({
+    courseId: expect.any(String),
+  });
+});

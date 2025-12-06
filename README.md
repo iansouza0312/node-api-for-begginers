@@ -6,6 +6,7 @@ Esse projeto visa demonstrar um exemplo prático, desde a criação e configura�
 
 - NodeJS (Version 23.8.0)
 - Typescript
+- Vitest
 - Fastify
 - Swagger
 - Docker
@@ -27,10 +28,18 @@ Com essa combinação, além de desenvolver validações consistentes e completa
 2. Utilizando docker para realizar todo o 'setup' do banco de dados de maneira simples e objetiva, sem ter que configurar localmente (para executar o container basta utilizar o comando : `docker compose up -d`).
 3. Utilização de ORM (`Drizzle`) para utilização de migrations do banco de dados.
 4. HTTP Status Code's coerentes e objetivos para cada requisição e tratamento de erros.
+5. Criação de testes automatizados
 
 ## Termos técnicos importantes :
 
 - Object-Relational Mapping | ORM : técnica que traduz o código orientado a objetos de uma aplicação para o modelo relacional de um banco de dados, atuando como uma camada que gera certo nível de abstração na escrita de consultas SQL dentro do seu código, permitindo que traalhe diretamente com objetos dentro da linguagem de programação do projeto, sem utilizar SQL puro.
+
+## Testes da aplicação - como foram desenvolvidos ?
+
+- e2e (end-to-end)
+- Fará requisição as rotas para teste de feature completa, utilizando mock data.
+- Simples e objetivo, porém mais pesados, gerando uma maior latência, se tornando menos viável para aplicações com um número maior de arquivos
+- Testes de 'Happy Path', onde tudo deu certo
 
 ## Arquivos de ORM (Object-Relational Mapping)
 
