@@ -53,23 +53,27 @@ server.get("/courses/:id", async (request, reply) => {
   return reply.status(404).send();
 });
 
-// server.post("/courses", (request, reply) => {
-//   type Body = {
-//     title: string;
-//   };
+server.post("/courses", async (request, reply) => {
+  type Body = {
+    title: string;
+  };
 
-//   const courseId = crypto.randomUUID();
-//   const body = request.body as Body;
-//   const courseTitle = body.title;
+  const body = request.body as Body;
+  const courseTitle = body.title;
 
-//   if (!courseTitle) {
-//     return reply.status(422).send({ error: "Title is a required field" });
-//   }
+  if (!courseTitle) {
+    return reply.status(422).send({ error: "Title is a required field" });
+  }
 
-//   courses.push({ id: courseId, title: courseTitle });
+  const result = await db
+    .insert(courses)
+    .values({
+      title: courseTitle,
+    })
+    .returning();
 
-//   return reply.status(201).send({ courseId });
-// });
+  return reply.status(201).send({ courseId: result[0].id });
+});
 
 server.listen({ port: 3333 }).then(() => {
   console.log("Server is running on http://localhost:3333");
