@@ -5,12 +5,11 @@ import {
   type ZodTypeProvider,
   jsonSchemaTransform,
 } from "fastify-type-provider-zod";
-import { z } from "zod";
 import { fastifySwagger } from "@fastify/swagger";
 import { fastifySwaggerUi } from "@fastify/swagger-ui";
-import { db } from "./src/database/client.ts";
-import { courses } from "./src/database/schema.ts";
-import { eq } from "drizzle-orm";
+import { createCourseRoute } from "./src/routes/create-course.ts";
+import { getCoursesRoute } from "./src/routes/get-courses.ts";
+import { getCourseByIdRoute } from "./src/routes/get-course-by-id.ts";
 
 const server = fastify({
   logger: {
@@ -43,64 +42,9 @@ server.register(fastifySwaggerUi, {
 server.setSerializerCompiler(serializerCompiler);
 server.setValidatorCompiler(validatorCompiler);
 
-server.get("/courses", async (request, reply) => {
-  const result = await db
-    .select({
-      id: courses.id,
-      title: courses.title,
-    })
-    .from(courses);
-
-  return reply.send({ courses: result });
-});
-
-server.get(
-  "/courses/:id",
-  {
-    schema: {
-      params: z.object({
-        id: z.uuid(),
-      }),
-    },
-  },
-  async (request, reply) => {
-    const courseId = request.params.id;
-
-    const result = await db
-      .select()
-      .from(courses)
-      .where(eq(courses.id, courseId));
-
-    if (result.length > 0) {
-      return { course: result[0] };
-    }
-
-    return reply.status(404).send();
-  }
-);
-
-server.post(
-  "/courses",
-  {
-    schema: {
-      body: z.object({
-        title: z.string().min(5, "Title must be at least 5 characters long"),
-      }),
-    },
-  },
-  async (request, reply) => {
-    const courseTitle = request.body.title;
-
-    const result = await db
-      .insert(courses)
-      .values({
-        title: courseTitle,
-      })
-      .returning();
-
-    return reply.status(201).send({ courseId: result[0].id });
-  }
-);
+server.register(createCourseRoute);
+server.register(getCoursesRoute);
+server.register(getCourseByIdRoute);
 
 server.listen({ port: 3333 }).then(() => {
   console.log("Server is running on http://localhost:3333");
