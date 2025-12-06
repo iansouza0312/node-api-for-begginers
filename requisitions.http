@@ -1,8 +1,9 @@
 POST http://localhost:3333/courses
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJlNmFiNTIzOS0yMGI4LTRiMjEtYTJiNS03MDQzMTFmOWI0YTMiLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTc2NTA0NDQ1N30.SYPm67DVuq5XyqjJb115bDi-MexsUVrpQIQvjX_oaWQ
 
 {
-  "title": "Curos de React-Native"
+  "title": "Curos de React-Native MANAGER SENIOR"
 }
 
 ###

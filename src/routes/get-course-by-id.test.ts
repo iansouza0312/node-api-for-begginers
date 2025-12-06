@@ -3,15 +3,17 @@ import request from "supertest";
 import { server } from "../app.ts";
 import { faker } from "@faker-js/faker";
 import { makeCourse } from "../test/factories/make-course.ts";
+import { makeAuthenticatedUser } from "../test/factories/make-user.ts";
 
 test("getting a course by id", async () => {
   await server.ready();
 
+  const { token } = await makeAuthenticatedUser("student");
   const testCourse = await makeCourse();
 
-  const response = await request(server.server).get(
-    `/courses/${testCourse.id}`
-  );
+  const response = await request(server.server)
+    .get(`/courses/${testCourse.id}`)
+    .set("Authorization", token);
 
   expect(response.status).toBe(200);
   expect(response.body).toEqual({
@@ -25,10 +27,11 @@ test("getting a course by id", async () => {
 
 test("return 404 when course not found", async () => {
   await server.ready();
+  const { token } = await makeAuthenticatedUser("student");
 
-  const response = await request(server.server).get(
-    `/courses/ba897db5-32be-4c00-b16a-c83bf27d975d`
-  );
+  const response = await request(server.server)
+    .get(`/courses/ba897db5-32be-4c00-b16a-c83bf27d975d`)
+    .set("Authorization", token);
 
   expect(response.status).toBe(404);
 });
