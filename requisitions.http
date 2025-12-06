@@ -2,10 +2,10 @@ POST http://localhost:3333/courses
 Content-Type: application/json
 
 {
-  "title": "Vue"
+  "title": "Curos de React-Native"
 }
 
 ###
-GET http://localhost:3333/courses
+GET http://localhost:3333/courses?orderBy=title
 ###
 GET http://localhost:3333/courses/591921c3-4614-4dea-b78c-ee1936049d5d
