@@ -2,7 +2,9 @@ import fastify from "fastify";
 import {
   validatorCompiler,
   serializerCompiler,
+  type ZodTypeProvider,
 } from "fastify-type-provider-zod";
+import { z } from "zod";
 import { db } from "./src/database/client.ts";
 import { courses } from "./src/database/schema.ts";
 import { eq } from "drizzle-orm";
@@ -17,7 +19,7 @@ const server = fastify({
       },
     },
   },
-});
+}).withTypeProvider<ZodTypeProvider>();
 
 server.setSerializerCompiler(serializerCompiler);
 server.setValidatorCompiler(validatorCompiler);
@@ -53,27 +55,28 @@ server.get("/courses/:id", async (request, reply) => {
   return reply.status(404).send();
 });
 
-server.post("/courses", async (request, reply) => {
-  type Body = {
-    title: string;
-  };
+server.post(
+  "/courses",
+  {
+    schema: {
+      body: z.object({
+        title: z.string().min(5, "Title must be at least 5 characters long"),
+      }),
+    },
+  },
+  async (request, reply) => {
+    const courseTitle = request.body.title;
 
-  const body = request.body as Body;
-  const courseTitle = body.title;
+    const result = await db
+      .insert(courses)
+      .values({
+        title: courseTitle,
+      })
+      .returning();
 
-  if (!courseTitle) {
-    return reply.status(422).send({ error: "Title is a required field" });
+    return reply.status(201).send({ courseId: result[0].id });
   }
-
-  const result = await db
-    .insert(courses)
-    .values({
-      title: courseTitle,
-    })
-    .returning();
-
-  return reply.status(201).send({ courseId: result[0].id });
-});
+);
 
 server.listen({ port: 3333 }).then(() => {
   console.log("Server is running on http://localhost:3333");

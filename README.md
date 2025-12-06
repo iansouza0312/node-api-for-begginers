@@ -34,3 +34,39 @@ Esse projeto visa demonstrar um exemplo prático, desde a criação e configura�
 
 - Validação : validar que os dados de entrada estão conforme os requisitos
 - Serialização : uma forma de converter/transformar dados de saída de uma rota eum um outro formato
+
+### Exemplo de validação de dados
+
+- Server.ts (validate title field)
+
+```
+...
+"/courses",
+  {
+    schema: {
+      body: z.object({
+        title: z.string().min(5, "Title must be at least 5 characters long"),
+      }),
+    },
+  },
+  async (request, reply) => {...}
+...
+```
+
+- Output (with bad request) :
+
+```
+HTTP/1.1 400 Bad Request
+content-type: application/json; charset=utf-8
+content-length: 132
+Date: Sat, 06 Dec 2025 02:28:51 GMT
+Connection: close
+
+{
+  "statusCode": 400,
+  "code": "FST_ERR_VALIDATION",
+  "error": "Bad Request",
+  "message": "body/title Title must be at least 5 characters long"
+}
+
+```
