@@ -23,21 +23,26 @@ const server = fastify({
   },
 }).withTypeProvider<ZodTypeProvider>();
 
-server.register(fastifySwagger, {
-  openapi: {
-    info: {
-      title: "Documentação para consumo de API de Cursos",
-      description:
-        "Esta é a documentação da API de Cursos desenvolvida no curso 'Primeira API com Node.js'.",
-      version: "1.0.0",
+if (process.env.NODE_ENV === "development") {
+  server.register(fastifySwagger, {
+    openapi: {
+      info: {
+        title: "Documentação para consumo de API de Cursos",
+        description:
+          "Esta é a documentação da API de Cursos desenvolvida no curso 'Primeira API com Node.js'.",
+        version: "1.0.0",
+      },
     },
-  },
-  transform: jsonSchemaTransform,
-});
+    transform: jsonSchemaTransform,
+  });
 
-server.register(scalarAPIReference, {
-  routePrefix: "/docs",
-});
+  server.register(scalarAPIReference, {
+    routePrefix: "/docs",
+    configuration: {
+      theme: "kepler",
+    },
+  });
+}
 
 server.setSerializerCompiler(serializerCompiler);
 server.setValidatorCompiler(validatorCompiler);
